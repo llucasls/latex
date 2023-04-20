@@ -12,6 +12,8 @@ endef
 
 GET_FILES = $(foreach FILE,$(filter %.pdf,$1),$(OUTPUT_DIR)/$(FILE))
 
+all: $(DOCUMENTS)
+
 %.pdf: %.tex | $(OUTPUT_DIR)
 	$(ENGINE) $(FLAGS) $<
 
