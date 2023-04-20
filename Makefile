@@ -20,9 +20,11 @@ $(OUTPUT_DIR):
 
 preview:
 	files="$(call GET_FILES,$(MAKECMDGOALS))"; \
-	$(PDF_VIEWER) $${files} 2> /dev/null
+	test -n "$${files}" && $(PDF_VIEWER) $${files} 2> /dev/null
 
 clean:
-	-rm -f $(OUTPUT_DIR)/*
+	rm -f $(OUTPUT_DIR)/*
 
 .SILENT: $(DOCUMENTS) preview
+
+.IGNORE: preview clean
