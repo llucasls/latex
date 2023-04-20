@@ -23,6 +23,6 @@ preview:
 	$(PDF_VIEWER) $${files} 2> /dev/null
 
 clean:
-	-rm $(OUTPUT_DIR)/*
+	-rm -f $(OUTPUT_DIR)/*
 
 .SILENT: $(DOCUMENTS) preview
