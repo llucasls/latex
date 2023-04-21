@@ -1,9 +1,8 @@
-DOCUMENTS := $(patsubst %.tex,%.pdf,$(wildcard *.tex))
+OUTPUT_DIR = documents
+DOCUMENTS := $(patsubst %.tex,$(OUTPUT_DIR)/%.pdf,$(wildcard *.tex))
 
 ENGINE = xelatex
 FLAGS  = --output-directory=$(OUTPUT_DIR)
-
-OUTPUT_DIR = documents
 
 define PDF_VIEWER
 _zathura() { tabbed -dc zathura $$@ -e; }; \
@@ -14,8 +13,11 @@ GET_FILES = $(foreach FILE,$(filter %.pdf,$1),$(OUTPUT_DIR)/$(FILE))
 
 all: $(DOCUMENTS)
 
-%.pdf: %.tex | $(OUTPUT_DIR)
-	$(ENGINE) $(FLAGS) $<
+$(OUTPUT_DIR)/%.pdf: %.tex | $(OUTPUT_DIR)
+	if test $< -nt $@; then $(ENGINE) $(FLAGS) $<; fi
+
+%.pdf: %.tex
+	@$(MAKE) --no-print-directory $(OUTPUT_DIR)/$@
 
 $(OUTPUT_DIR):
 	mkdir $(OUTPUT_DIR)
