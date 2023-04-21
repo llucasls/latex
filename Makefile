@@ -32,3 +32,5 @@ clean:
 .SILENT: $(DOCUMENTS) preview
 
 .IGNORE: preview clean
+
+.PHONY: all preview clean
